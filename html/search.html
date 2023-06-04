@@ -3,18 +3,66 @@
 	<head>
 		<title>Contacts Manager</title>
 		<link rel="stylesheet" href="main.css">
+		<script src="search.js" defer></script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</head>
 	<body>
 		<nav class="header-nav">
 			<a class="home-logo" href="/">Home</a>
-			<form class="search" aria-label="Search box" onsubmit="event.preventDefault();search()">
-				<input type="search" class="search-field" placeholder="Search">
+			<form class="search" aria-label="Search box" onsubmit="event.preventDefault(); searchSubmit()">
+				<input type="search" id="search-field" placeholder="Search">
 				<input type="submit" class="search-submit">
 				<button class="search-clear" aria-label="Clear search" title="Clear search">⨉</button>
 			</form>
-			<button id="add-contact" aria-label="Add contact">+ Add Contact</button>
+			<button id="add-contact" aria-label="Add contact" onclick="document.getElementById('add-dialog').showModal()">+ Add Contact</button>
 		</nav>
+
+		<template id="contact-template">
+			<li class="contact-listing" data-json="{}">
+				<span class="contact-field contact-name">Firstname Lastname</span>
+				<span class="contact-field contact-phone">555-555-5555</span>
+				<a class="contact-field contact-email">person@example.com</a>
+				<button class="contact-edit">Edit</button>
+				<button class="contact-delete">Delete</button>
+			</li>
+		</template>
+		<ul id="contacts-table">
+			<p>Nothing here yet. Search to show contacts</p>
+		</ul>
+
+		<dialog id="edit-dialog" class="input-dialog" data-original="{}">
+			<form onsubmit="event.preventDefault(); editSubmit()">
+				<label>Name</label>
+				<input id="edit-name" required>
+				<br>
+				<label>Phone Number</label>
+				<input id="edit-phone" required pattern="[\.\-)( ]*[0-9]{3}[\.\-)( ]*[0-9]{3}[\.\-)( ]*[0-9]{4}">
+				<br>
+				<label>Email Address</label>
+				<input id="edit-email" required pattern="\w*@\w*\.\w*">
+				<br>
+
+				<input type="submit" value="Confirm">
+				<button onclick="document.getElementById('edit-dialog').close()">Close</button>
+			</form>
+		</dialog>
+
+		<dialog id="add-dialog" class="input-dialog">
+			<form onsubmit="event.preventDefault(); addSubmit()">
+				<label>Name</label>
+				<input id="add-name" required>
+				<br>
+				<label>Phone Number</label>
+				<input id="add-phone" required pattern="[\.\-)( ]*[0-9]{3}[\.\-)( ]*[0-9]{3}[\.\-)( ]*[0-9]{4}">
+				<br>
+				<label>Email Address</label>
+				<input id="add-email" required pattern="\w*@\w*\.\w*">
+				<br>
+
+				<input type="submit" value="Add">
+				<button onclick="document.getElementById('add-dialog').close()">Back</button>
+			</form>
+		</dialog>
 	</body>
 </html>
