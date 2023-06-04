@@ -1,14 +1,18 @@
-function searchSubmit() {
+const BASE = "http://cop4331-group5.com";
+
+async function searchSubmit() {
 	const query = getVal("search-field");
 
+	const response = await fetch(BASE + "/LAMPAPI/search_contacts.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: `{"userId": 1, "search": "${query}"}`,
+	});
+
 	// TODO: actual query.
-	const response = {
-		results: [
-			{Name: "Firstname Lastname", Phone: "555-555-5555", Email: "firstlast@example.com"},
-			{Name: "Firstname Smith", Phone: "555-123-4567", Email: "firstsmith@example.com"},
-			{Name: "John Lastname", Phone: "555-987-6543", Email: "johnlast@example.com"},
-		]
-	};
+	const json = await response.json();
 
 
 	const template = document.getElementById("contact-template").content;
@@ -19,10 +23,13 @@ function searchSubmit() {
 		contactsTable.removeChild(contactsTable.children[0]);
 	}
 
-	for (const person of response.results) {
-		// Simulated search functionality until we hook up real search.
-		if (person.Name.search(query) == -1) continue;
+	// If no results
+	if (json.length == 0) {
+		// Possible TODO: make a proper error screen.
+		return;
+	}
 
+	for (const person of json) {
 		const elem = template.cloneNode(true);
 
 		elem.querySelector(".contact-name").innerText = person.Name;
