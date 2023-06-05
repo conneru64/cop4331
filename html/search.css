@@ -1,0 +1,91 @@
+/* Colors and variables */
+:root {
+	--primary-color: aqua;
+	--button-padding: 0.3rem;
+	--button-border-radius: 0.2rem;
+	--transition-time: 0.1s;
+}
+
+/* Normalization stuff */
+* {
+	box-sizing: border-box;
+}
+:root, html, body {
+	margin: 0;
+	padding: 0;
+}
+
+/* Navigation header */
+.header-nav {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0.5rem;
+	background-color: var(--primary-color);
+}
+.header-nav > * {
+	margin: auto 1rem;
+}
+.header-nav > .search {
+	flex: 1;
+	min-width: 10rem;
+}
+
+/* Search box */
+.search {
+	display: flex;
+	background-color: Field;
+	border: Fieldtext 1px solid;
+	border-radius: var(--button-border-radius);
+	transition: outline var(--transition-time);
+}
+.search:focus-within {
+	outline: Highlight 2px solid;
+}
+.search > #search-field {
+	height: 100%;
+	flex: 1;
+	padding: var(--button-padding);
+}
+.search > .search-clear {
+	aspect-ratio: 1;
+	border-radius: var(--button-border-radius);
+}
+.search > .search-submit {
+	border-radius: var(--button-border-radius);
+}
+
+#add-contact {
+	margin: auto 0;
+	padding: var(--button-padding);
+	border-radius: var(--button-border-radius);
+}
+
+/* Contacts listing table */
+#contacts-table {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	flex-direction: column;
+}
+.contact-listing {
+	all: unset;
+	display: flex;
+	border: CanvasText 1px solid;
+	padding: 1rem;
+}
+.contact-listing > .contact-field {
+	margin: 0 1rem;
+	flex: 1;
+}
+
+/* Add and Edit dialog */
+.input-dialog input[pattern]:invalid {
+	outline: red 1px solid;
+}
+/* dialog background */
+.input-dialog::backdrop {
+	background-color: CanvasText;
+	opacity: 0.3;
+}

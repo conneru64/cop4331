@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="js/code.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <title>Contact Page Sign In</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('COPPNG.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+    
+    .logo {
+      display: block;
+      width: 100px; /* Adjust the width as needed */
+      height: auto; /* Maintain aspect ratio */
+      margin: 10px; /* Adjust margin as needed */
+    }
+
+    .container {
+      width: 400px;
+      margin: 80px auto;
+      background-color: #440569;
+      padding: 30px;
+      border-radius: 50px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+      text-align: center;
+      color: #faf9f9;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #59a3f1;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #59a3f1;
+    }
+
+    
+    .register-link {
+      text-align: center;
+      margin-top: 10px;
+      color: #faf9f9;
+    }
+    
+    .register-link a {
+      text-decoration: none;
+      color: #faf9f9;
+    }
+
+  </style>
+</head>
+<body>
+  <img class="logo" src="LampShadeProjectIcon.png" alt="Logo">
+  <div class="container" id="apiResponse">
+    <h2>Please Sign In</h2>
+    <form id="form_login" method="post">
+      <input type="text" name="login" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="submit" value="Sign In" onsubmit="submitform()">
+    </form>
+    <div class="register-link">
+      Don't have an account? <a href="RegisterPage.html">Register</a>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+  var form = document.getElementById('form_login');
+      form.onsubmit = function(event){
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData(form);
+        //open the request
+        xhr.open('POST','/LAMPAPI/Login.php')
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        //send the form data
+        xhr.send(JSON.stringify(Object.fromEntries(formData)));
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState =4) {
+              if (xhr.status == 200)
+              <!-- json_data has the response from the input -->
+                  var json_data = xhr.responseText;
+                  var jsonData = JSON.parse(json_data);     
+                  if(jsonData.id>0){
+                    console.log(jsonData.id)
+                    location.href = "search.html";
+                  }
+            }
+        }
+        
+        //Fail the onsubmit to avoid page refresh.
+        return false; 
+    }
+    </script>
+    
+</body>
+</html>

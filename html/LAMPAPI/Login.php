@@ -1,11 +1,11 @@
 
 <?php
-
+	session_start();
 	$inData = getRequestInfo();
 	
 	$id = 0;
-	$firstName = "";
-	$lastName = "";
+	$login = "";
+	$password = "";
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
 	if( $conn->connect_error )
@@ -20,12 +20,13 @@
 		$result = $stmt->get_result();
 
 		if( $row = $result->fetch_assoc()  )
-		{
+		{	
 			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+			$_SESSION['user_id'] = $row['ID'];
 		}
 		else
 		{
-			returnWithError("No Records Found");
+			returnWithError("User does not exist");
 		}
 
 		$stmt->close();

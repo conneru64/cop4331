@@ -1,6 +1,6 @@
 
 <?php
-
+	session_start();
 	$inData = getRequestInfo();
 	
 	$id = 0;
@@ -29,7 +29,7 @@
 		else
 		{
             $stmt = $conn->prepare("INSERT INTO Contacts (Name,Phone,Email,UserID) values (?, ?, ?, ?)");
-		    $stmt->bind_param("ssss", $inData["Name"], $inData["Phone"], $inData["Email"], $inData["UserID"]);
+		    $stmt->bind_param("ssss", $inData["Name"], $inData["Phone"], $inData["Email"], $_SESSION['user_id']);
 		    $stmt->execute();
             echo "New records created successfully";
             

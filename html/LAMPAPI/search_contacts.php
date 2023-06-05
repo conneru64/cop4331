@@ -1,5 +1,5 @@
 <?php
-
+	session_start();
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
@@ -14,11 +14,11 @@
 	{
 		$stmt = $conn->prepare("select Name , Phone, Email from Contacts where Name like ? and UserID=?");
 		$ContactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $ContactName, $inData["userId"]);
+		$stmt->bind_param("ss", $ContactName, $_SESSION['user_id']);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
-		
+		$searchResults.="[";
 		while($row = $result->fetch_assoc())
 		{
 			if( $searchCount > 0 )
@@ -26,8 +26,9 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '"' . $row["Name"] . ' ' . $row["Phone"] . ' ' . $row["Email"] . '"';
+			$searchResults .= '{"Name":"' . $row["Name"] . '","Phone":"' . $row["Phone"] . '","Email":"' . $row["Email"] . '"}';
 		}
+		$searchResults.="]";
 		
 		if( $searchCount == 0 )
 		{
@@ -35,7 +36,7 @@
 		}
 		else
 		{
-			returnWithInfo( $searchResults );
+			sendResultInfoAsJson( $searchResults );
 		}
 		
 		$stmt->close();

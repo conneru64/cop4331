@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register For Access</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('COPPNG.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+
+    .logo {
+      display: block;
+      width: 100px; /* Adjust the width as needed */
+      height: auto; /* Maintain aspect ratio */
+      margin: 10px; /* Adjust margin as needed */
+    }
+
+    .container {
+      width: 400px;
+      margin: 5px auto;
+      background-color: #440569;
+      padding: 30px;
+      border-radius: 50px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+      text-align: center;
+      color: #faf9f9;
+
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="email"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #59a3f1;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #59a3f1;
+    }
+  </style>
+  <script>
+    function register() {
+      // Retrieve the entered username and password
+      var firstName = document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value;
+      var email = document.getElementById("email").value;
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      // Perform account registration (replace with your own logic to create an account)
+      // Assume the account registration is successful
+      
+      // Redirect to the sign in page after registration
+      window.location.href = "SignInPage.html";
+    }
+  </script>
+</head>
+<body>
+  <img class="logo" src="LampShadeProjectIcon.png" alt="Logo">
+  <div class="container">
+    <h2>Please fill out the infomation for registration</h2>
+    <form onsubmit="event.preventDefault(); register();">
+        <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
+        <input type="text" name="lastName" id="lastName" placeholder="Last Name" required>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+        <input type="text" name="username" id="username" placeholder="Username" required>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <input type="submit" value="Register">
+    </form>
+  </div>
+</body>
+</html>
