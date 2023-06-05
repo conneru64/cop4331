@@ -31,8 +31,7 @@
             $stmt = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) values (?, ?, ?, ?)");
 		    $stmt->bind_param("ssss", $inData["firstName"], $inData["lastName"], $inData["login"], $inData["password"]);
 		    $stmt->execute();
-            echo "New records created successfully";
-            
+            returnuseralreadyexists("User Created");
 		}
         $stmt1->close();
 		$stmt->close();

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" src="js/code.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <title>Register For Access</title>
   <style>
     /* Add some basic styling */
@@ -68,34 +70,51 @@
       background-color: #59a3f1;
     }
   </style>
-  <script>
-    function register() {
-      // Retrieve the entered username and password
-      var firstName = document.getElementById("firstName").value;
-      var lastName = document.getElementById("lastName").value;
-      var email = document.getElementById("email").value;
-      var username = document.getElementById("username").value;
-      var password = document.getElementById("password").value;
-      // Perform account registration (replace with your own logic to create an account)
-      // Assume the account registration is successful
-      
-      // Redirect to the sign in page after registration
-      window.location.href = "SignInPage.html";
-    }
-  </script>
 </head>
 <body>
   <img class="logo" src="LampShadeProjectIcon.png" alt="Logo">
   <div class="container">
     <h2>Please fill out the infomation for registration</h2>
-    <form onsubmit="event.preventDefault(); register();">
+    <form id="form_register" method="post">
         <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
         <input type="text" name="lastName" id="lastName" placeholder="Last Name" required>
         <input type="email" name="email" id="email" placeholder="Email" required>
-        <input type="text" name="username" id="username" placeholder="Username" required>
+        <input type="text" name="login" id="login" placeholder="Username" required>
         <input type="password" name="password" id="password" placeholder="Password" required>
-        <input type="submit" value="Register">
+        <input type="submit" value="Register" onsubmit="register()">
     </form>
   </div>
+
+  <script type="text/javascript">
+    var form = document.getElementById('form_register');
+      form.onsubmit = function(event){
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData(form);
+        //open the request
+        xhr.open('POST','/LAMPAPI/Register.php')
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        //send the form data
+        xhr.send(JSON.stringify(Object.fromEntries(formData)));
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState =4) {
+              if (xhr.status == 200)
+              <!-- json_data has the response from the input -->
+                  var json_data = xhr.responseText;
+                  var jsonData = JSON.parse(json_data);     
+                  if(jsonData.error=="User Created"){
+                    console.log(jsonData.error)
+                    location.href = "SignInPage.html";
+                  }else{
+                    console.log(jsonData.error)
+                    location.href = "RegisterPage.html";
+                  }
+            }
+        }
+        return false; 
+    }
+  </script>
+
 </body>
 </html>
