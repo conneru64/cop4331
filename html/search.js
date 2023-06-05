@@ -8,7 +8,7 @@ async function searchSubmit() {
 		headers: {
 			"Content-Type": "application/json; charset=UTF-8",
 		},
-		body: `{"userId": 1, "search": "${query}"}`,
+		body: `{"search": "${query}"}`,
 	});
 
 	// TODO: actual query.
@@ -23,9 +23,11 @@ async function searchSubmit() {
 		contactsTable.removeChild(contactsTable.children[0]);
 	}
 
-	// If no results
-	if (json.length == 0) {
+	// If error.
+	if (!response.ok || !Array.isArray(json)) {
 		// Possible TODO: make a proper error screen.
+
+		console.error("search_contacts response error: ", json);
 		return;
 	}
 
@@ -63,12 +65,22 @@ function editSubmit() {
 	searchSubmit();
 }
 
-function addSumit() {
+async function addSubmit() {
 	const name = getVal("add-name");
 	const phone = getVal("add-phone");
 	const email = getVal("add-email");
 
-	console.log("Pretending to add: ", name, phone, email);
+	const response = await fetch(BASE + "/LAMPAPI/createcontact.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: `{"Name": "${name}", "Phone": "${phone}", "Email": "${email}"}`,
+	});
+
+	if (!response.ok) {
+		console.error("createcontact error: ", response);
+	}
 
 	// Refresh contacts list.
 	searchSubmit();
@@ -87,9 +99,21 @@ function editContactButton(contactJson) {
 	dialog.showModal();
 }
 
-function deleteContactButton(contactJson) {
-	console.log("Pretending to delete: ", contactJson);
-	// TODO
+async function deleteContactButton(contactJson) {
+	const response = await fetch(BASE + "/LAMPAPI/deletecontact.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: JSON.stringify(contactJson),
+	});
+
+	if (!response.ok) {
+		console.error("deletecontact error: ", response);
+	}
+
+	// Refresh contacts list/
+	searchSubmit();
 }
 
 
