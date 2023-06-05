@@ -32,7 +32,7 @@
 		</ul>
 
 		<dialog id="edit-dialog" class="input-dialog" data-original="{}">
-			<form onsubmit="event.preventDefault(); editSubmit()">
+			<form onsubmit="event.preventDefault(); editSubmit(); document.getElementById('edit-dialog').close()">
 				<label>Name</label>
 				<input id="edit-name" required>
 				<br>
@@ -49,7 +49,7 @@
 		</dialog>
 
 		<dialog id="add-dialog" class="input-dialog">
-			<form onsubmit="event.preventDefault(); addSubmit()">
+			<form onsubmit="event.preventDefault(); addSubmit(); document.getElementById('add-dialog').close()">
 				<label>Name</label>
 				<input id="add-name" required>
 				<br>
