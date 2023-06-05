@@ -9,11 +9,11 @@
 	</head>
 	<body>
 		<nav class="header-nav">
-			<a class="home-logo" href="/">Home</a>
+			<a class="home-logo" href="/"><img src="LampShadeProjectIcon.png"></a>
 			<form class="search" aria-label="Search box" onsubmit="event.preventDefault(); searchSubmit()">
 				<input type="search" id="search-field" placeholder="Search">
-				<input type="submit" class="search-submit">
-				<button class="search-clear" aria-label="Clear search" title="Clear search">⨉</button>
+				<input type="submit" class="search-submit" value="Search">
+				<button class="search-clear" aria-label="Clear search" title="Clear search" onclick="event.preventDefault(); document.getElementById('search-field').value=''">⨉</button>
 			</form>
 			<button id="add-contact" aria-label="Add contact" onclick="document.getElementById('add-dialog').showModal()">+ Add Contact</button>
 		</nav>
