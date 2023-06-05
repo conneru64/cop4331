@@ -1,6 +1,6 @@
 /* Colors and variables */
 :root {
-	--primary-color: aqua;
+	--primary-color: #440569;
 	--button-padding: 0.3rem;
 	--button-border-radius: 0.2rem;
 	--transition-time: 0.1s;
@@ -30,6 +30,9 @@
 .header-nav > .search {
 	flex: 1;
 	min-width: 10rem;
+}
+.header-nav > .home-logo, .header-nav > .home-logo > img {
+	height: 2rem;
 }
 
 /* Search box */
