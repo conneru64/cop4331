@@ -54,12 +54,45 @@ async function searchSubmit() {
 	}
 }
 
-function editSubmit() {
-	const name = getVal("edit-name");
-	const phone = getVal("edit-phone");
-	const email = getVal("edit-email");
+async function editSubmit() {
+	const originalContact = JSON.parse(document.getElementById("edit-dialog").getAttribute("data-original"));
+	const newName = getVal("edit-name");
+	const newPhone = getVal("edit-phone");
+	const newEmail = getVal("edit-email");
 
-	console.log("Pretending to edit: ", name, phone, email);
+	const nameResponse = await fetch(BASE + "/LAMPAPI/updatename.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: `{"Name": "${newName}", "Phone": "${originalContact.Phone}", "Email": "${originalContact.Email}"}`,
+	});
+	if (!nameResponse.ok) {
+		console.error("Error updating name: ", nameResponse);
+		return;
+	}
+	const phoneResponse = await fetch(BASE + "/LAMPAPI/updatephone.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: `{"Name": "${newName}", "Phone": "${newPhone}", "Email": "${originalContact.Email}"}`,
+	});
+	if (!phoneResponse.ok) {
+		console.error("Error updating name: ", phoneResponse);
+		return;
+	}
+	const emailResponse = await fetch(BASE + "/LAMPAPI/updateemail.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json; charset=UTF-8",
+		},
+		body: `{"Name": "${newName}", "Phone": "${newPhone}", "Email": "${newEmail}"}`,
+	});
+	if (!emailResponse.ok) {
+		console.error("Error updating name: ", emailResponse);
+		return;
+	}
 
 	// Refresh contacts list.
 	searchSubmit();
